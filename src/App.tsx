@@ -1,38 +1,32 @@
 import React from 'react';
 import { useState, useEffect } from "react";
-import logo from './logo.svg';
 import './App.css';
+import TodoItem from './todo'
 
 function App() {
-    const [message, setMessage] = useState("");
+    const [todos, setTodos] = useState([]);
 
     useEffect(() => {
         // 1. Define the async function
         const fetchData = async () => {
-            const response = await fetch('http://localhost:8000');
-            const result = await response.json();
-            setMessage(result.message);
+            const response = await fetch('http://localhost:8000/todos');
+            const results = await response.json();
+            setTodos(results);
         }
         // 2. Call the async func
         fetchData();
     }, []);
 
-    console.log(message);
+    console.log(todos);
+    const todo_items = todos.map(
+        todo =>
+            <TodoItem text={todo["text"]} completed={todo["completed"]} />
+    );
     return (
         <div className="App">
             <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    {message}
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
+                <h5>To Do List</h5>
+                {todo_items}
             </header>
         </div>
     );
