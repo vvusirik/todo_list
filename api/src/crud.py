@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import delete
 
 import models
 import schemas
@@ -18,3 +19,14 @@ def create_todo(db: Session, todo: schemas.TodoCreate):
     db.commit()
     db.refresh(db_todo)
     return db_todo
+
+
+def update_todo(db: Session, todo_id: int, todo: schemas.TodoBase):
+    update_dict = todo.dict(exclude_unset=True)
+    db.query(models.Todo).filter(models.Todo.id == todo_id).update(update_dict)
+    db.commit()
+
+
+def archive_completed(db: Session):
+    db.query(models.Todo).where(models.Todo.completed).delete()
+    db.commit()

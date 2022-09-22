@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 import sqlalchemy
 import databases
@@ -7,8 +7,8 @@ from pydantic import BaseModel
 # Contains the attributes that are common to the object creation 
 # and the full object that you'd get from the database
 class TodoBase(BaseModel):
-    text: str
-    completed: bool
+    text: Optional[str] = None
+    completed: bool = False
 
 
 # This is the type for creating a todo item programatically

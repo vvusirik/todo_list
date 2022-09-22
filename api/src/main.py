@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from database import SessionLocal, engine
 from sqlalchemy.orm import Session
-from crud import get_todos
+import crud
 import schemas
 from typing import List
 
@@ -27,11 +27,24 @@ def get_db():
         db.close()
 
 
-@app.get("/")
-def root(db: Session = Depends(get_db)):
-    return {"message": "hey"}
-
-
 @app.get("/todos", response_model=List[schemas.Todo])
 def todos(db: Session = Depends(get_db)):
-    return get_todos(db)
+    return crud.get_todos(db)
+
+
+@app.post("/create_todo", response_model=schemas.Todo)
+def create_todo(todo: schemas.TodoCreate, db: Session = Depends(get_db)):
+    """Insert todo into db"""
+    return crud.create_todo(db, todo)
+
+
+@app.put("/update_todo/{todo_id}")
+def update_todo(todo_id: int, todo: schemas.TodoBase, db: Session = Depends(get_db)):
+    """An example of how to apply partial updates to a model. (Only update based on params that are actually set)"""
+    return crud.update_todo(db=db, todo_id=todo_id, todo=todo)
+
+
+@app.delete("/archive_completed")
+def archive_completed(db: Session = Depends(get_db)):
+    """Delete completed tasks"""
+    return crud.archive_completed(db=db)
