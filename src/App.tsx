@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from "react";
+import { AnchorButton } from "@blueprintjs/core";
 import './App.css';
 import TodoItem from './todo'
 
@@ -17,16 +18,16 @@ function App() {
         fetchData();
     }, []);
 
-    console.log(todos);
     const todo_items = todos.map(
         todo =>
-            <TodoItem text={todo["text"]} completed={todo["completed"]} />
+            <TodoItem id={todo["id"]} text={todo["text"]} completed={todo["completed"]} />
     );
     return (
         <div className="App">
             <header className="App-header">
-                <h5>To Do List</h5>
+                <h2>To Do List</h2>
                 {todo_items}
+                <AnchorButton text="Add" intent="primary"/>
             </header>
         </div>
     );
