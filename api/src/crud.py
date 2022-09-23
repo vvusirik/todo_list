@@ -27,6 +27,11 @@ def update_todo(db: Session, todo_id: int, todo: schemas.TodoBase):
     db.commit()
 
 
+def delete_todo(db: Session, todo_id: int):
+    db.query(models.Todo).filter(models.Todo.id == todo_id).delete()
+    db.commit()
+
+
 def archive_completed(db: Session):
     db.query(models.Todo).where(models.Todo.completed).delete()
     db.commit()

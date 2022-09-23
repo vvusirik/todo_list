@@ -48,3 +48,9 @@ def update_todo(todo_id: int, todo: schemas.TodoBase, db: Session = Depends(get_
 def archive_completed(db: Session = Depends(get_db)):
     """Delete completed tasks"""
     return crud.archive_completed(db=db)
+
+
+@app.delete("/delete_todo/{todo_id}")
+def delete_todo(todo_id: int, db: Session = Depends(get_db)):
+    """Delete specific task"""
+    return crud.delete_todo(db=db, todo_id=todo_id)
