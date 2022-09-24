@@ -27,7 +27,7 @@ function App() {
             <header className="App-header">
                 <h2>To Do List</h2>
                 {todo_items}
-                <AnchorButton text="Add" intent="primary"/>
+                <AnchorButton intent="primary" icon="add"/>
             </header>
         </div>
     );
