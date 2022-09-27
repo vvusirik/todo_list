@@ -1,7 +1,6 @@
 from typing import List, Optional
 
 import sqlalchemy
-import databases
 from pydantic import BaseModel
 
 # Contains the attributes that are common to the object creation 
