@@ -32,24 +32,15 @@ function App() {
         todo =>
             <TodoItem id={todo["id"]} text={todo["text"]} completed={todo["completed"]} />
     );
-    let newTodo = <></>;
-    if (shouldRenderNewTodo) {
-        newTodo = <EditableText defaultValue="" maxLength={100} onConfirm={(text) => {
-            setShouldRenderNewTodo(false);
-            createTodo(text);
-        }} />;
-    }
     return (
         <div className="App">
             <header className="App-header">
                 <h2>To Do List</h2>
-                {todo_items}
-                {newTodo}
-
-                <AnchorButton intent="primary" icon="add" onClick={(_) => {
-                    setShouldRenderNewTodo(true);
+                <EditableText defaultValue="" isEditing={true} maxLength={100} placeholder="Add To Do" onConfirm={(text) => {
+                    setShouldRenderNewTodo(false);
+                    createTodo(text);
                 }} />
-
+                {todo_items}
             </header>
         </div>
     );
